@@ -1,12 +1,16 @@
+import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { decrease, increase, change } from "../modules/counter";
 
 const CounterBox = () => {
     // useSelector를 통해서 state의  원하는 값을 가져올수 있다
     const number = useSelector((state)=>(state.counter.number))
+    const changeNum = useSelector((state)=>(state.counter.changeNum))
     // useDispatch를 통해서 사용할 함수를 가져옴
     const dispatch = useDispatch();
-    const changeNum = useSelector((state)=>(state.counter.changeNum))
+
+    // Callback함수를 이용해서 함수 새로 만듦 방지
+    const onChange = useCallback((e)=>dispatch(change(e.target.value)),[dispatch])
     return (  
         <div>
             <h1>카운트입니다</h1>
@@ -29,6 +33,9 @@ const CounterBox = () => {
             {/* changeNum값을 바꿀 input */}
             <p>{changeNum}</p>
             <input type="text" onChange={(e)=>{dispatch(change(e.target.value))}}/>
+            {/* 익명함수 화살표 함수로 작성시 렌더될때마다 함수를 다시생성 > Callback으로 저정 해서 사용 */}
+            <input type="text" onChange={onChange}/>
+
         </div>
     );
 }
