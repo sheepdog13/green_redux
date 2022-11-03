@@ -7,14 +7,20 @@ import reportWebVitals from './reportWebVitals';
 // 리덕스 프로바이더 추가
 import {Provider} from "react-redux"
 // store를 만들기위한 createStore 추가: redux
-import { createStore } from 'redux';
+// applyMiddleware를 통해 미들웨어 추가 가능
+import { createStore, applyMiddleware } from 'redux';
 // store에 추가할 counter state와 action
 import counter from './modules/counter';
 // rootReducer를 통해 한번에 묶어서 사용가능
 import rootReducer from './modules';
 
+// 미들웨어를 작성 및 설치 후 추가
+//import loggerMiddleware from './lib/loggerMiddleware';
+import logger from 'redux-logger'
+import thunk from 'redux-thunk'
+
 // createStore를 이용하여 store 생성
-const store = createStore(rootReducer)
+const store = createStore(rootReducer, applyMiddleware(logger, thunk))
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
