@@ -21,6 +21,15 @@ export const counter = createSlice({
     }
 })
 
+// toolkit 에는 thunk가 내장되있기 때문에 설치하지 않고 사용가능하다
+// thunk 사용하는 방식과 동일하게 사용 : 함수형으로 작성
+// thunk로 작성한 함수는 액션함수를 사용하는 것과 동일하게 사용
+// :dispatch(incrementAsync())
+export const incrementAsync = () => (dispatch) => {
+    // counter.actions을 통해 내보내준 increment를 함수형식으로 작성해서 넣어준다
+    setTimeout(()=>{dispatch(increment())}, 1000)
+}
+
 // 액션타입을 함수로 만들어서 내보내기
 export const {increment, incrementByAmount} = counter.actions
 
